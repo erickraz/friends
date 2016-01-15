@@ -102,8 +102,7 @@
     //   // and display them at our holder element
     //   result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
     // });
-        console.log('zz')
-
+var counter = 0;
     FB.api('/me/albums?fields=id,name', function(response) {
     console.log(response.data.length)
     for (var i=0; i<response.data.length; i++) {
@@ -119,15 +118,16 @@
               console.log(photo.picture)
               image.src = photo.picture;
               document.body.appendChild(image);
+              counter++;
+
             }
           }
         });
-        console.log('zz')
       //  break;
       //}
     }
-            console.log('zz')
     });
+    console.log(counter)
   }
 </script>
 
