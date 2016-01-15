@@ -92,9 +92,9 @@
       var photo_data = response.data;
 
       var results = '';
-      console.log(photo_data.length);
+      console.log(photo_data[0].picture);
       for (var i = 0; i < photo_data.length; i++) {
-        results += '<div><img src="https://facebook.com/' + photo_data[i].id + '">' + '</div>';
+        results += '<div><img src="https://facebook.com/' + photo_data[i].picture + '">' + '</div>';
       }
 
       // and display them at our holder element
