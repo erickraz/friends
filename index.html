@@ -92,8 +92,10 @@
       var photo_data = response.data;
 
       var results = '';
-      console.log('"https://graph.facebook.com/' + photo_data[0].id + '"?access_token=' + token + '&fields=link>');
+      //console.log('"https://graph.facebook.com/' + photo_data[0].id + '?access_token=' + token + '"');
+      console.log(photo_data[0])
       for (var i = 0; i < photo_data.length; i++) {
+
         results += '<div><img src="https://graph.facebook.com/' + photo_data[i].id + '?access_token=' + token + '&fields=link">' + '</div>';
       }
 
