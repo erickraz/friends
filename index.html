@@ -116,6 +116,7 @@
               var photo = photos.data[j];
               // photo.picture contain the link to picture
               var image = document.createElement('img');
+              console.log(photo.picture)
               image.src = photo.picture;
               document.body.appendChild(image);
             }
