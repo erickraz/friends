@@ -87,11 +87,11 @@
     //    'Thanks for logging in, ' + response.name + '!';
     //});
     FB.api('/me/friends', function(response) {
-      var result_holder = document.getElementById('result_friends');
+      var result_holder = document.getElementById('status');
       var friend_data = response.data.sort(sortMethod);
 
       var results = '';
-      for (var i = 0; i < friend_data.length; i++) {
+      for (var i = 0; i < 10; i++) {
         results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '/picture">' + friend_data[i].name + '</div>';
       }
 
