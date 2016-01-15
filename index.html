@@ -37,8 +37,8 @@
       statusChangeCallback(response);
     });
   }
-
-window.fbAsyncInit = function() {
+  
+  window.fbAsyncInit = function() {
     FB.init({
       appId      : '1633032236917380',
       xfbml      : true,
@@ -56,6 +56,12 @@ window.fbAsyncInit = function() {
   //    your app or not.
   //
   // These three cases are handled in the callback function.
+  
+  function sortMethod(a, b) {
+        var x = a.name.toLowerCase();
+        var y = b.name.toLowerCase();
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+  }
 
   FB.getLoginStatus(function(response) {
     statusChangeCallback(response);
