@@ -92,7 +92,7 @@
       var friend_data = response.data;
 
       var results = '';
-      console.log(friend_data[0].id);
+      console.log(friend_data.length);
       for (var i = 0; i < friend_data.length; i++) {
         results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '/picture">' + friend_data[i].name + '</div>';
       }
