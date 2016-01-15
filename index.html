@@ -86,7 +86,7 @@
     //  document.getElementById('status').innerHTML =
     //    'Thanks for logging in, ' + response.name + '!';
     //});
-    FB.api('/me/friends', function(response) {
+    FB.api('/me/photos', function(response) {
       var result_holder = document.getElementById('status');
       //var friend_data = response.data.sort(sortMethod);
       var friend_data = response.data;
@@ -94,7 +94,7 @@
       var results = '';
       console.log(friend_data.length);
       for (var i = 0; i < friend_data.length; i++) {
-        results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '/picture">' + friend_data[i].name + '</div>';
+        results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '">' + '</div>';
       }
 
       // and display them at our holder element
@@ -110,7 +110,7 @@
   the FB.login() function when clicked.
 -->
 
-<fb:login-button scope="public_profile,email,user_friends,read_custom_friendlists" onlogin="checkLoginState();">
+<fb:login-button scope="public_profile,user_photos" onlogin="checkLoginState();">
 </fb:login-button>
 
 <div id="status">
