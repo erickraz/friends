@@ -108,7 +108,7 @@
     console.log(response.data.length)
     for (var i=0; i<response.data.length; i++) {
       var album = response.data[i];
-      if (album.name == 'Profile Pictures'){
+      //if (album.name == 'Profile Pictures'){
 
         FB.api('/'+album.id+'/photos?fields=picture', function(photos){
           if (photos && photos.data && photos.data.length){
@@ -123,8 +123,8 @@
           }
         });
         console.log('zz')
-        break;
-      }
+      //  break;
+      //}
     }
             console.log('zz')
     });
