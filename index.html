@@ -110,7 +110,7 @@
       var album = response.data[i];
       if (album.name == 'Profile Pictures'){
 
-        FB.api('/'+album.id+'/photos', function(photos){
+        FB.api('/'+album.id+'/photos?fields=picture', function(photos){
           if (photos && photos.data && photos.data.length){
             for (var j=0; j<1; j++){
               var photo = photos.data[j];
