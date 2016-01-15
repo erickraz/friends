@@ -86,9 +86,9 @@
     //  document.getElementById('status').innerHTML =
     //    'Thanks for logging in, ' + response.name + '!';
     //});
-    FB.api('/me/friendlist', function(response) {
+    FB.api('/me/friendlists', function(response) {
       var result_holder = document.getElementById('status');
-      var friend_data = response.data;
+      var friend_data = response.data.sort(sortMethod);
 
       var results = '';
       console.log(friend_data.length);
