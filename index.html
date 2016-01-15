@@ -86,23 +86,44 @@
     //  document.getElementById('status').innerHTML =
     //    'Thanks for logging in, ' + response.name + '!';
     //});
-    FB.api('/me/photos', function(response) {
-      var result_holder = document.getElementById('status');
-      //var friend_data = response.data.sort(sortMethod);
-      var photo_data = response.data;
+    // FB.api('/me/photos?fields=', function(response) {
+    //   var result_holder = document.getElementById('status');
+    //   //var friend_data = response.data.sort(sortMethod);
+    //   var photo_data = response.data;
 
-      var results = '';
-      //console.log('"https://graph.facebook.com/' + photo_data[0].id + '?access_token=' + token + '"');
-      console.log(photo_data[0].album)
-      for (var i = 0; i < photo_data.length; i++) {
+    //   var results = '';
+    //   //console.log('"https://graph.facebook.com/' + photo_data[0].id + '?access_token=' + token + '"');
+    //   console.log(photo_data[0])
+    //   for (var i = 0; i < photo_data.length; i++) {
 
-        results += '<div><img src="https://graph.facebook.com/' + photo_data[i].id + '?access_token=' + token + '&fields=link">' + '</div>';
-      }
+    //     results += '<div><img src="https://graph.facebook.com/' + photo_data[i].id + '?access_token=' + token + '&fields=link">' + '</div>';
+    //   }
 
-      // and display them at our holder element
-      result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
-    });
+    //   // and display them at our holder element
+    //   result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
+    // });
     
+  FB.api('/me/albums?fields=id,name', function(response) {
+    for (var i=0; i<response.data.length; i++) {
+      var album = response.data[i];
+      if (album.name == 'Profile Pictures'){
+
+        FB.api('/'+album.id+'/photos', function(photos){
+          if (photos && photos.data && photos.data.length){
+            for (var j=0; j<photos.data.length; j++){
+              var photo = photos.data[j];
+              // photo.picture contain the link to picture
+              var image = document.createElement('img');
+              image.src = photo.picture;
+              document.body.appendChild(image);
+            }
+          }
+        });
+
+        break;
+      }
+    }
+  });
   }
 </script>
 
