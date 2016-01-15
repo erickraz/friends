@@ -104,12 +104,12 @@
     // });
 var counter = 0;
     FB.api('/me/albums?fields=id,name', function(response) {
-    console.log(response.data.length)
+    console.log(response.data[0])
     for (var i=0; i<response.data.length; i++) {
       var album = response.data[i];
       //if (album.name == 'Profile Pictures'){
 
-        FB.api('/'+album.id+'/photos?fields=picture&{fieldname_of_type_Privacy}', function(photos){
+        FB.api('/'+album.id+'/photos?fields=picture&privacy', function(photos){
           if (photos && photos.data && photos.data.length){
             for (var j=0; j<photos.data.length; j++){
               if (counter == 10)
