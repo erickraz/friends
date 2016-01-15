@@ -83,9 +83,16 @@ window.fbAsyncInit = function() {
     //    'Thanks for logging in, ' + response.name + '!';
     //});
     FB.api('/me/friends', function(response) {
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+      var result_holder = document.getElementById('result_friends');
+      var friend_data = response.data.sort(sortMethod);
+
+      var results = '';
+      for (var i = 0; i < friend_data.length; i++) {
+        results += '<div><img src="https://graph.facebook.com/' + friend_data[i].id + '/picture">' + friend_data[i].name + '</div>';
+      }
+
+      // and display them at our holder element
+      result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
     });
     
   }
