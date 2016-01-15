@@ -16,7 +16,7 @@
     // for FB.getLoginStatus().
     if (response.status === 'connected') {
       // Logged into your app and Facebook.
-      testAPI();
+      testAPI(response.authResponse.accessToken);
     } else if (response.status === 'not_authorized') {
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
@@ -78,7 +78,7 @@
 
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
-  function testAPI() {
+  function testAPI(token) {
     console.log('Welcome!  Fetching your information.... ');
     
     //FB.api('/me', function(response) {
@@ -94,7 +94,7 @@
       var results = '';
       console.log(photo_data[0].id);
       for (var i = 0; i < photo_data.length; i++) {
-        results += '<div><img src="https://graph.facebook.com/' + photo_data[i].id + '"?access_token=MY_CORRECT_TOKEN&fields=li‌​nk>' + '</div>';
+        results += '<div><img src="https://graph.facebook.com/' + photo_data[i].id + '"?access_token=' + token + '&fields=li‌​nk>' + '</div>';
       }
 
       // and display them at our holder element
