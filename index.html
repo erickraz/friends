@@ -88,7 +88,7 @@
     //});
     FB.api('/me/friendlist', function(response) {
       var result_holder = document.getElementById('status');
-      var friend_data = response.data.sort(sortMethod);
+      var friend_data = response.data;
 
       var results = '';
       console.log(friend_data.length);
