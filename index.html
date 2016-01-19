@@ -119,6 +119,7 @@ var counter = 0;
               var image = document.createElement('img');
               //console.log(photo.picture)
               image.src = photo.picture;
+              var pixels = image.getImagedata.data;
               document.body.appendChild(image);
               counter++;
               console.log(counter)
