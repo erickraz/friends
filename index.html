@@ -107,8 +107,10 @@ var counter = 0;
     console.log(response.data[0])
     for (var i=0; i<response.data.length; i++) {
       var album = response.data[i];
-      if (album.privacy != "everyone")
+      if (album.privacy != "everyone"){
+        console.log(album.privacy)
         continue;
+      }
       //if (album.name == 'Profile Pictures'){
 
         FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
@@ -123,7 +125,7 @@ var counter = 0;
               image.src = photo.picture;
               document.body.appendChild(image);
               counter++;
-              console.log(counter)
+              //console.log(counter)
 
             }
           }
