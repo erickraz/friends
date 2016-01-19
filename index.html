@@ -117,8 +117,9 @@ var counter = 0;
               //  console.log(photos.data[j])
               // photo.picture contain the link to picture
               var image = document.createElement('img');
-              //console.log(photo.picture)
+              console.log(photo.picture)
               image.src = photo.picture;
+              console.log(image)
               var pixels = image.getImagedata.data;
               document.body.appendChild(image);
               counter++;
