@@ -107,6 +107,8 @@ var counter = 0;
     console.log(response.data[0])
     for (var i=0; i<response.data.length; i++) {
       var album = response.data[i];
+      if (album.privacy != "everyone")
+        continue;
       //if (album.name == 'Profile Pictures'){
 
         FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
