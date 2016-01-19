@@ -113,7 +113,7 @@ var counter = 0;
       }
       //if (album.name == 'Profile Pictures'){
 
-        FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
+        FB.api('/'+album.id+'/photos?fields=picture,images&edges=insights', function(photos){
           if (photos && photos.data && photos.data.length){
             for (var j=0; j<photos.data.length; j++){
               if (counter == 10)
