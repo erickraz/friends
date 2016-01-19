@@ -107,16 +107,12 @@ var counter = 0;
     console.log(response.data[0])
     for (var i=0; i<response.data.length; i++) {
       var album = response.data[i];
-      if (album.privacy != "everyone"){
-        console.log(album.privacy)
-        continue;
-      }
       //if (album.name == 'Profile Pictures'){
 
-        FB.api('/'+album.id+'/photos?fields=picture,images&edges=insights', function(photos){
+        FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
           if (photos && photos.data && photos.data.length){
             for (var j=0; j<photos.data.length; j++){
-              if (counter == 10)
+              if (counter == 20)
                 console.log(photos.data[i])
               var photo = photos.data[j];
               // photo.picture contain the link to picture
