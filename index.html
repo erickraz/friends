@@ -3,8 +3,6 @@
 <head>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
-Security.loadPolicyFile("http://graph.facebook.com/crossdomain.xml");<br />Security.loadPolicyFile("https://graph.facebook.com/crossdomain.xml");<br />Security.loadPolicyFile("http://profile.ak.fbcdn.net/crossdomain.xml");<br />Security.loadPolicyFile("https://profile.ak.fbcdn.net/crossdomain.xml");<br />Security.loadPolicyFile('http://profile.cc.fbcdn.net/crossdomain.xml');<br />Security.loadPolicyFile('https://profile.cc.fbcdn.net/crossdomain.xml');<br />Security.loadPolicyFile('http://fbcdn-profile-a.akamaihd.net/crossdomain.xml');<br />Security.loadPolicyFile('https://fbcdn-profile-a.akamaihd.net/crossdomain.xml');<br />Security.loadPolicyFile('http://fbcdn-sphotos-a.akamaihd.net/crossdomain.xml');<br />Security.loadPolicyFile('https://fbcdn-sphotos-a.akamaihd.net/crossdomain.xml');<br />Security.allowDomain("*");<br />Security.allowInsecureDomain("*");
-
 </head>
 <body>
 <script>
@@ -153,8 +151,9 @@ var counter = 0;
               //if (counter < 50 || counter > 40)
               //  console.log(photos.data[j])
               // photo.picture contain the link to picture
+              this.headers['Access-Control-Allow-Origin'] = '*';
               var image = document.createElement('img');
-              //image.crossOrigin="http://graph.facebook.com/crossdomain.xml";
+              image.crossOrigin="anonymous";
               image.src = photo.picture;
               var image2 = new CanvasImage(image);
               var pixels = image2.getImageData().data;
