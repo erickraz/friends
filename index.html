@@ -48,7 +48,6 @@
       appId      : '1633032236917380',
       xfbml      : true,
       version    : 'v2.5'
-      
     });
 
   // Now that we've initialized the JavaScript SDK, we call 
@@ -153,7 +152,7 @@ var counter = 0;
               //  console.log(photos.data[j])
               // photo.picture contain the link to picture
               var image = document.createElement('img');
-              image.crossOrigin="anonymous";
+              image.crossOrigin="http://graph.facebook.com/crossdomain.xml";
               image.src = photo.picture;
               var image2 = new CanvasImage(image);
               var pixels = image2.getImageData().data;
