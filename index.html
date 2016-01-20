@@ -170,8 +170,8 @@ img.onload = function() {
     canvas.width = img.width;
     canvas.height = img.height;
     ctx.drawImage( img, 0, 0 );
-    localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
-    console.log(canvas);
+    //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
+    canvas.getImageData();
 }
 img.src = src;
 // make sure the load event fires for cached images too
