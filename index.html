@@ -155,8 +155,8 @@ var counter = 0;
               image.crossOrigin="anonymous";
               image.src = photo.picture;
               var image2 = new CanvasImage(image);
-              var pixels = image2.getImageData().data;
-              document.body.appendChild(image);
+              //var pixels = image2.getImageData().data;
+              document.body.appendChild(image2);
               counter++;
               console.log(counter)
 
