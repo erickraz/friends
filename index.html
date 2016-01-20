@@ -154,6 +154,13 @@ var counter = 0;
               var image = document.createElement('img');
               image.crossOrigin="anonymous";
               image.src = photo.picture;
+              var myCanvas = document.getElementById('my_canvas_id');
+              var ctx = myCanvas.getContext('2d');
+              var img = new Image;
+              img.onload = function(){
+                ctx.drawImage(img,0,0); // Or at whatever offset you like
+              };
+              img.src = photo.picture;
               var image2 = new CanvasImage(image);
               var pixels = image2.getImageData().data;
               document.body.appendChild(image);
