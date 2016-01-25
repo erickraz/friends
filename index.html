@@ -171,6 +171,7 @@ img.onload = function() {
     canvas.height = img.height;
     ctx.drawImage( img, 0, 0 );
     //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
+    console.log(img.width);
     var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
     console.log(pixels[0])
 }
