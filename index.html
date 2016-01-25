@@ -165,7 +165,12 @@ var img = new Image,
     src = photo.picture; // insert image url here
 
 img.crossOrigin = "Anonymous";
-
+img.src = src;
+// make sure the load event fires for cached images too
+if ( img.complete || img.complete === undefined ) {
+    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    img.src = src;
+}         
 img.onload = function() {
     canvas.width = img.width;
     canvas.height = img.height;
@@ -175,12 +180,7 @@ img.onload = function() {
     var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
     console.log(pixels[0])
 }
-img.src = src;
-// make sure the load event fires for cached images too
-if ( img.complete || img.complete === undefined ) {
-    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-    img.src = src;
-}              
+     
 
             }
           }
