@@ -152,13 +152,13 @@ for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
 
     FB.api('/me/albums?fields=id,name,privacy', function(response) {
     console.log(response.data[0])
-    for (var i=0; i<1; i++) {
+    for (var i=0; i<i<response.data.length; i++) {
       var album = response.data[i];
       //if (album.name == 'Profile Pictures'){
 
         FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
           if (photos && photos.data && photos.data.length){
-            for (var j=0; j<1; j++){
+            for (var j=0; j<<photos.data.length; j++){
               var photo = photos.data[j];
               console.log(photos.data[j])
               var img = new Image,
@@ -185,11 +185,11 @@ for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                     //console.log(pixels[0])
                     for(var k = 0, offset, r, g, b, a; k < img.width*img.height; ++k){
                       offset = k * 4;
-                      r = pixels[offset+0];
-                      g = pixels[offset+1];
-                      b = pixels[offset+2];
+                      r = pixels[offset+0]/16;
+                      g = pixels[offset+1]/16;
+                      b = pixels[offset+2]/16;
                       a = pixels[offset+3];
-                      hist[Math.floor(r/16)*16*16+Math.floor(g/16)*16+Math.floor(b/16)]++;
+                      hist[Math.floor(r)*16*16+Math.floor(g)*16+Math.floor(b)]++;
 
                     }
                     console.log(hist);
@@ -203,10 +203,10 @@ for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                         }
                     }
                     //console.log((r/16)*16*16+(g/16)*16+(b/16));
-                    console.log(max);
-                    console.log(maxIndex);
+                    //console.log(max);
+                    //console.log(maxIndex);
                     table[Math.floor(maxIndex/256)][Math.floor(maxIndex/16)%16][maxIndex%16]++;
-                    console.log(table);
+                    //console.log(table);
 
                   }
               }
