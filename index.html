@@ -186,6 +186,7 @@ for(var i = 0; i < 16; i++){
                     g = pixels[offset+1];
                     b = pixels[offset+2];
                     a = pixels[offset+3];
+                    table[r/16][g/16][b/16]++;
                   }
               }
      
@@ -193,7 +194,8 @@ for(var i = 0; i < 16; i++){
             }
           }
         });
-    }
+      }
+    console.log(table);
     });
   }
 </script>
