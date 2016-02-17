@@ -148,6 +148,7 @@ for(var i = 0; i < 16; i++){
     }
   }
 }
+for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
 
     FB.api('/me/albums?fields=id,name,privacy', function(response) {
     console.log(response.data[0])
@@ -176,19 +177,19 @@ for(var i = 0; i < 16; i++){
                   canvas.width = img.width;
                   canvas.height = img.height;
                   if (img.height){
-                  ctx.drawImage( img, 0, 0 );
-                  //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
-                  //console.log(img.width);
-                  var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
-                  //console.log(pixels[0])
-                  for(var i = 0, offset, r, g, b, a; i < img.width*img.height; ++i){
-                    offset = i * 4;
-                    r = pixels[offset+0];
-                    g = pixels[offset+1];
-                    b = pixels[offset+2];
-                    a = pixels[offset+3];
-                    //table[r/16][g/16][b/16]++;
-                  }
+                    ctx.drawImage( img, 0, 0 );
+                    //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
+                    //console.log(img.width);
+                    var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+                    //console.log(pixels[0])
+                    for(var i = 0, offset, r, g, b, a; i < img.width*img.height; ++i){
+                      offset = i * 4;
+                      r = pixels[offset+0];
+                      g = pixels[offset+1];
+                      b = pixels[offset+2];
+                      a = pixels[offset+3];
+                      hist[(r/16)*16*16+(g/16)*16+(b/16)]++;
+                    }
                   }
               }
      
