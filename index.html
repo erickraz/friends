@@ -148,8 +148,6 @@ for(var i = 0; i < 16; i++){
     }
   }
 }
-for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
-
     FB.api('/me/albums?fields=id,name,privacy', function(response) {
     console.log(response.data[0])
     for (var i=0; i<response.data.length; i++) {
@@ -175,6 +173,7 @@ for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                   img.src = src;
               }         
               img.onload = function() {
+                for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                   canvas.width = img.width;
                   canvas.height = img.height;
                   if (img.height){
