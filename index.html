@@ -138,6 +138,17 @@ CanvasImage.prototype.removeCanvas = function () {
 };
 
 var counter = 0;
+var table = [];
+for(var i = 0; i < 16; i++){
+  table[i] = [];
+  for(var j = 0; j < 16; j++){
+    table[i][j] = [];
+    for(var k = 0; k < 16; k++){
+      table[i][j][k] = 0;
+    }
+  }
+}
+
     FB.api('/me/albums?fields=id,name,privacy', function(response) {
     console.log(response.data[0])
     for (var i=0; i<response.data.length; i++) {
@@ -148,53 +159,45 @@ var counter = 0;
           if (photos && photos.data && photos.data.length){
             for (var j=0; j<photos.data.length; j++){
               var photo = photos.data[j];
-              //if (counter < 50 || counter > 40)
-                console.log(photos.data[j])
-              // photo.picture contain the link to picture
-              /*var image = document.createElement('img');
-              image.crossOrigin="anonymous";
-              image.src = photo.picture;
-              var image2 = new CanvasImage(image);
-              //var pixels = image2.getImageData().data;
-              //document.body.appendChild(image2);
-              counter++;
-              console.log(counter)*/
-var img = new Image,
-    canvas = document.createElement("canvas"),
-    ctx = canvas.getContext("2d"),
-    src = photo.picture; // insert image url here
+              console.log(photos.data[j])
+              var img = new Image,
+              canvas = document.createElement("canvas"),
+              ctx = canvas.getContext("2d"),
+              src = photo.picture; // insert image url here
 
-img.crossOrigin = "Anonymous";
-img.src = src;
-// make sure the load event fires for cached images too
-if ( img.complete || img.complete === undefined ) {
-    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-    img.src = src;
-}         
-img.onload = function() {
-    canvas.width = img.width;
-    canvas.height = img.height;
-    ctx.drawImage( img, 0, 0 );
-    //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
-    //console.log(img.width);
-    var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
-    //console.log(pixels[0])
-    for(var i = 0, offset, r, g, b, a; i < img.width*img.height; ++i){
-      offset = i * 4;
-      r = pixels[offset+0];
-      g = pixels[offset+1];
-      b = pixels[offset+2];
-      a = pixels[offset+3];
-    }
-}
+              img.crossOrigin = "Anonymous";
+              img.src = src;
+              // make sure the load event fires for cached images too
+              if ( img.complete || img.complete === undefined ) {
+                  img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+                  img.src = src;
+              }         
+              img.onload = function() {
+                  canvas.width = img.width;
+                  canvas.height = img.height;
+                  if (img.height){
+                  ctx.drawImage( img, 0, 0 );
+                  //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
+                  //console.log(img.width);
+                  var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+                  //console.log(pixels[0])
+                  for(var i = 0, offset, r, g, b, a; i < img.width*img.height; ++i){
+                    offset = i * 4;
+                    r = pixels[offset+0];
+                    g = pixels[offset+1];
+                    b = pixels[offset+2];
+                    a = pixels[offset+3];
+                    //table[r/16][g/16][b/16]++;
+                  }
+                  }
+              }
      
 
             }
           }
         });
-      //  break;
-      //}
-    }
+      }
+    console.log(table);
     });
   }
 </script>
