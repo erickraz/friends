@@ -152,19 +152,20 @@ for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
 
     FB.api('/me/albums?fields=id,name,privacy', function(response) {
     console.log(response.data[0])
-    for (var i=0; i<response.data.length; i++) {
+    for (var i=0; i<1; i++) {
       var album = response.data[i];
       //if (album.name == 'Profile Pictures'){
 
         FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
           if (photos && photos.data && photos.data.length){
-            for (var j=0; j<photos.data.length; j++){
+            for (var j=0; j<1; j++){
               var photo = photos.data[j];
               console.log(photos.data[j])
               var img = new Image,
               canvas = document.createElement("canvas"),
               ctx = canvas.getContext("2d"),
               src = photo.picture; // insert image url here
+              document.body.appendChild(img);
 
               img.crossOrigin = "Anonymous";
               img.src = src;
