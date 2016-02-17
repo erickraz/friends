@@ -205,7 +205,7 @@ for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                     //console.log((r/16)*16*16+(g/16)*16+(b/16));
                     console.log(max);
                     console.log(maxIndex);
-                    table[(maxIndex/256)][(maxIndex/16)%16][maxIndex%16]++;
+                    table[Math.floor(maxIndex/256)][Math.floor(maxIndex/16)%16][maxIndex%16]++;
                     console.log(table);
 
                   }
