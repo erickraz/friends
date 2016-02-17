@@ -182,14 +182,25 @@ for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                     //console.log(img.width);
                     var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
                     //console.log(pixels[0])
-                    for(var i = 0, offset, r, g, b, a; i < img.width*img.height; ++i){
-                      offset = i * 4;
+                    for(var k = 0, offset, r, g, b, a; k < img.width*img.height; ++k){
+                      offset = k * 4;
                       r = pixels[offset+0];
                       g = pixels[offset+1];
                       b = pixels[offset+2];
                       a = pixels[offset+3];
                       hist[(r/16)*16*16+(g/16)*16+(b/16)]++;
+
                     }
+                    var max = hist[0];
+                    var maxIndex = 0;
+
+                    for (var k = 1; k < hist.length; k++) {
+                        if (hist[i] > max) {
+                            maxIndex = k;
+                            max = hist[k];
+                        }
+                    }
+                    table[(maxIndex/256)][(maxIndex/16)%16][maxIndex%16]++;
                   }
               }
      
