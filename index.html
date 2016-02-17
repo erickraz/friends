@@ -197,7 +197,7 @@ for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                     var maxIndex = 0;
 
                     for (var k = 1; k < hist.length; k++) {
-                        if (hist[i] > max) {
+                        if (hist[k] > max) {
                             maxIndex = k;
                             max = hist[k];
                         }
