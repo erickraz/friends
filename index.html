@@ -202,6 +202,7 @@ for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                             max = hist[k];
                         }
                     }
+                    console.log(pixels[10*4+1]);
                     console.log(max);
                     console.log(maxIndex);
                     table[(maxIndex/256)][(maxIndex/16)%16][maxIndex%16]++;
