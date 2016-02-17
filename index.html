@@ -191,7 +191,7 @@ for(var i = 0; i < 16; i++){
                       hist[Math.floor(r)*16*16+Math.floor(g)*16+Math.floor(b)]++;
 
                     }
-                    console.log(hist);
+                    //console.log(hist);
                     var max = hist[0];
                     var maxIndex = 0;
 
@@ -206,7 +206,7 @@ for(var i = 0; i < 16; i++){
                     //console.log(maxIndex);
                     table[Math.floor(maxIndex/256)][Math.floor(maxIndex/16)%16][maxIndex%16]++;
                     //console.log(table);
-
+                    console.log(counter++);
                   }
               }
      
