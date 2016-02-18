@@ -146,9 +146,6 @@ var myMappings = [
     { title: "Comments", width: "20%" }
 ];
 var table = [];
-for(var i = 0; i < 16; i++){
-  table[i] = []
-}
 var urls = [];
     FB.api('/me/albums?fields=id,name,privacy', function(response) {
     console.log(response.data[0])
@@ -179,8 +176,6 @@ var urls = [];
                   canvas.width = img.width;
                   canvas.height = img.height;
                   if (img.height){
-                    counter++;
-                    urls[urls.length] = img.src;
                     //console.log(img.height);
                     ctx.drawImage( img, 0, 0 );
                     //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
@@ -209,13 +204,9 @@ var urls = [];
                             max = hist[k];
                         }
                     }
-                    //console.log((r/16)*16*16+(g/16)*16+(b/16));
-                    //console.log(max);
-                    //console.log(maxIndex);
                     tableY = table[Math.floor(maxIndex/256)]
-                    tableY[tableY.length] = {U: u,V: v, index: counter};
-                    //console.log(table);
-                    //console.log(counter++);
+                    //tableY[tableY.length] = {U: u,V: v, index: counter};
+                    table[table.length] = {Y: y,U: u,V: v, Url: img.src};
                   }
               }
      
@@ -225,6 +216,7 @@ var urls = [];
         });
       }
     console.log(table);
+    console.log()
     });
   FB.api("/me/picture?type=large", function(response) {
     console.log(response);
