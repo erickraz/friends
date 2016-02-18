@@ -244,7 +244,7 @@ var onLoaded = function() {
   if(imgNum == 0){
   FB.api("/me/picture?type=large", function(response) {
     console.log(response);
-    var w = 10;
+    var w = 5;
     var photo = response.data;
     var img = new Image;
     var canvas = document.createElement("canvas");
