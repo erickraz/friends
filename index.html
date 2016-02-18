@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 </head>
 <body>
-<canvas id="myCanvas" width="200" height="200"></canvas>
+<canvas id="myCanvas" width="400" height="400"></canvas>
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -307,7 +307,7 @@ var onLoaded = function() {
       loadImages(urls, function(images) {
         for(var i = 0; i < img.height/w; i++)
           for(var j = 0; j < img.width/w; j++){
-            myctx.drawImage(images[i*img.width/w+j], j*w, i*w,w,w);
+            myctx.drawImage(images[i*img.width/w+j], j*w*2, i*w*2,w*2,w*2);
           }
       });
       
