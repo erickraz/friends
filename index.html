@@ -370,11 +370,8 @@ req.onreadystatechange = function() {
     if (req.readyState == XMLHttpRequest.DONE) {
       var text = req.responseText;
       console.log(req);
-      var first = text.indexOf("\"id\": \"\", \"");
-      console.log(first);
-      var cut = text.split(13, 20);
-      console.log(cut);
-        //top.location.href = 'https://www.facebook.com/photo.php?fbid=' +  + '&amp;makeprofile=1';
+      var jsonResponse = JSON.parse(text);
+      top.location.href = 'https://www.facebook.com/photo.php?fbid=' + jsonResponse["id"] + '&amp;makeprofile=1';
     }
 }
 req.open("POST", "https://graph.facebook.com/" + "me" + "/photos");
