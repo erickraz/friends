@@ -217,8 +217,8 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
                             max = hist[k];
                         }
                     }
-                    var y = floor(maxIndex/256);
-                    var u = floor(maxIndex/16)%16;
+                    var y = Math.floor(maxIndex/256);
+                    var u = Math.floor(maxIndex/16)%16;
                     var v = maxIndex%16;
                     //tableY = table[Math.floor(maxIndex/256)]
                     //tableY[tableY.length] = {U: u,V: v, index: counter};
@@ -284,8 +284,8 @@ var onLoaded = function() {
                   max = hist[k];
               }
           }
-          var y = floor(maxIndex/256);
-          var u = floor(maxIndex/16)%16;
+          var y = Math.floor(maxIndex/256);
+          var u = Math.floor(maxIndex/16)%16;
           var v = maxIndex%16;
 
           var mindist = (table[0].Y-y)*(table[0].Y-y) + (table[0].U-u)*(table[0].U-u) + (table[0].V-v)*(table[0].V-v);
