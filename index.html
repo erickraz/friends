@@ -337,9 +337,6 @@ var onLoaded = function() {
             myctx.drawImage(images[i*img.width/w+j], j*w*2, i*w*2,w*2,w*2);
           }
           var data = myCanvas.toDataURL("image/png");
-          var encodedPng = data.substring(data.indexOf(',') + 1, data.length);
-          var decodedPng = Base64Binary.decode(encodedPng);
-          console.log(decodedPng);
       });
       
 
@@ -356,14 +353,9 @@ var onLoaded = function() {
 }
   }
 function postCanvasToFacebook() {
-  var data = canvas.toDataURL("image/png");
-  var encodedPng = data.substring(data.indexOf(',') + 1, data.length);
-  var decodedPng = Base64Binary.decode(encodedPng);
-  FB.getLoginStatus(function(response) {
-    if (response.status === "connected") {  
-      postImageToFacebook(response.authResponse.accessToken, "heroesgenerator", "image/png", decodedPng, "www.heroesgenerator.com");
-    }
-  });
+  var myCanvas = document.getElementById('myCanvas');
+  var data = myCanvas.toDataURL("image/png");
+  FB.api('/me/photos', 'post', { message:'Album montage', url:data});
 }
 </script>
 
