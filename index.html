@@ -220,7 +220,7 @@ for(var i = 0; i < 16; i++){
     });
   FB.api("/me", {fields: "id,name,picture"}, function(response) {
     console.log(response);
-    var photo = response.data[j];
+    var photo = response.picture.data;
     var img = new Image,
     canvas = document.createElement("canvas"),
     ctx = canvas.getContext("2d"),
