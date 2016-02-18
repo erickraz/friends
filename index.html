@@ -136,43 +136,20 @@ CanvasImage.prototype.getImageData = function () {
 CanvasImage.prototype.removeCanvas = function () {
     this.canvas.parentNode.removeChild(this.canvas);
 };
-
-var counter = 0;
-var myMappings = [
-    { title: "Name", width: "10%" },
-    { title: "Phone", width: "10%" },
-    { title: "Address", width: "50%" },
-    { title: "Zip", width: "10%" },
-    { title: "Comments", width: "20%" }
-];
-var table = [];
-var urls = [];
-    FB.api('/me/albums?fields=id,name,privacy', function(response) {
-    console.log(response.data[0])
-    for (var i=0; i<response.data.length; i++) {
-      var album = response.data[i];
-      //if (album.name == 'Profile Pictures'){
-
-        FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
-          if (photos && photos.data && photos.data.length){
-            for (var j=0; j<photos.data.length; j++){
-              var photo = photos.data[j];
-              //console.log(photos.data[j])
-              var img = new Image,
-              canvas = document.createElement("canvas"),
-              ctx = canvas.getContext("2d"),
-              src = photo.picture; // insert image url here
-              //document.body.appendChild(img);
-
-              img.crossOrigin = "Anonymous";
-              img.src = src;
-              // make sure the load event fires for cached images too
-              if ( img.complete || img.complete === undefined ) {
-                  img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-                  img.src = src;
-              }         
-              img.onload = function() {
-                for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
+function loadSprite(src) {
+                var deferred = $.Deferred();
+                var img = new Image();
+                canvas = document.createElement("canvas"),
+                ctx = canvas.getContext("2d"),
+                img.src = src;
+                img.crossOrigin = "Anonymous";
+                // make sure the load event fires for cached images too
+                if ( img.complete || img.complete === undefined ) {
+                    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+                    img.src = src;
+                }         
+                img.onload = function() {
+                  for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                   canvas.width = img.width;
                   canvas.height = img.height;
                   if (img.height){
@@ -209,7 +186,38 @@ var urls = [];
                     table[table.length] = {Y: y,U: u,V: v, Url: img.src};
                     //console.log(table);
                   }
+                    deferred.resolve();
+                };
+                return deferred.promise();
               }
+var counter = 0;
+var myMappings = [
+    { title: "Name", width: "10%" },
+    { title: "Phone", width: "10%" },
+    { title: "Address", width: "50%" },
+    { title: "Zip", width: "10%" },
+    { title: "Comments", width: "20%" }
+];
+var table = [];
+var loaders = [];
+    FB.api('/me/albums?fields=id,name,privacy', function(response) {
+    console.log(response.data[0])
+    for (var i=0; i<response.data.length; i++) {
+      var album = response.data[i];
+      //if (album.name == 'Profile Pictures'){
+
+        FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
+          if (photos && photos.data && photos.data.length){
+            for (var j=0; j<photos.data.length; j++){
+              var photo = photos.data[j];
+              //console.log(photos.data[j])
+
+              //src = photo.picture; // insert image url here
+              //document.body.appendChild(img);
+
+              loaders.push(loadSprite(photo.picture));
+              
+              
      
 
             }
@@ -230,6 +238,7 @@ var urls = [];
       console.log(img.height);
       console.log(table);
     }
+
     // make sure the load event fires for cached images too
     // if ( img.complete || img.complete === undefined ) {
     //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
