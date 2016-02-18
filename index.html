@@ -207,7 +207,7 @@ var urls = [];
                     //tableY = table[Math.floor(maxIndex/256)]
                     //tableY[tableY.length] = {U: u,V: v, index: counter};
                     table[table.length] = {Y: y,U: u,V: v, Url: img.src};
-                    console.log(table);
+                    //console.log(table);
                   }
               }
      
@@ -216,7 +216,7 @@ var urls = [];
           }
         });
       }
-    console.log(table);
+    
     });
   FB.api("/me/picture?type=large", function(response) {
     console.log(response);
@@ -228,6 +228,7 @@ var urls = [];
     img.src = src;
     img.onload = function() {
       console.log(img.height);
+      console.log(table);
     }
     // make sure the load event fires for cached images too
     // if ( img.complete || img.complete === undefined ) {
