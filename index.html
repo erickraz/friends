@@ -148,7 +148,7 @@ var myMappings = [
 ];
 var table = [];
 var urls = [];
-var loaders = [];
+var imgNum = 0;
     FB.api('/me/albums?fields=id,name,privacy', function(response) {
     console.log(response.data[0])
     for (var i=0; i<response.data.length; i++) {
@@ -158,6 +158,7 @@ var loaders = [];
         FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
           if (photos && photos.data && photos.data.length){
             for (var j=0; j<photos.data.length; j++){
+              ++imgNum;
               var photo = photos.data[j];
               //console.log(photos.data[j])
               var img = new Image,
@@ -173,8 +174,6 @@ var loaders = [];
                   img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
                   img.src = src;
               }         
-              var deferred = $.Deferred();
-              loaders.push(deferred.promise());
               img.onload = function() {
                 for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                   canvas.width = img.width;
@@ -213,9 +212,10 @@ var loaders = [];
                     table[table.length] = {Y: y,U: u,V: v, Url: img.src};
                     //console.log(table);
                   }
-                  deferred.resolve();
+                  --imgNum;
+                  onLoaded();
               }
-            
+     
 
             }
           }
@@ -223,9 +223,29 @@ var loaders = [];
       }
     
     });
-$.when.apply(null, loaders).done(function() {
-console.log(table);
-});
+var onLoaded = function() {
+  if(imgNum == 0){
+  FB.api("/me/picture?type=large", function(response) {
+    console.log(response);
+    var photo = response.data;
+    var img = new Image,
+    canvas = document.createElement("canvas"),
+    ctx = canvas.getContext("2d"),
+    src = photo.url; // insert image url here
+    img.src = src;
+    img.onload = function() {
+      console.log(img.height);
+      console.log(table);
+    }
+    // make sure the load event fires for cached images too
+    // if ( img.complete || img.complete === undefined ) {
+    //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    //     img.src = src;
+    // }         
+    document.body.appendChild(img);
+  }
+  });
+}
   }
 </script>
 
