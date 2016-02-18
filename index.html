@@ -225,7 +225,7 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
                     var v = maxIndex%16;
                     //tableY = table[Math.floor(maxIndex/256)]
                     //tableY[tableY.length] = {U: u,V: v, index: counter};
-                    table[table.length] = {Y: y,U: u,V: v, Url: img.src};
+                    table[table.length] = {Y: y*16,U: u*16,V: v*16, Url: img.src};
                     //table[table.length] = {Pixels: pixels, Url:img.src, Img:img};
                     //console.log(table);
                   }
