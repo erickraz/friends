@@ -333,6 +333,7 @@ var onLoaded = function() {
           for(var j = 0; j < img.width/w; j++){
             myctx.drawImage(images[i*img.width/w+j], j*w*2, i*w*2,w*2,w*2);
           }
+        console.log(myCanvas.toDataURL("image/png"));
       });
       
 
