@@ -225,8 +225,8 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
                     var v = maxIndex%16;
                     //tableY = table[Math.floor(maxIndex/256)]
                     //tableY[tableY.length] = {U: u,V: v, index: counter};
-                    //table[table.length] = {Y: y,U: u,V: v, Url: img.src};
-                    table[table.length] = {Pixels: pixels, Url:img.src, Img:img};
+                    table[table.length] = {Y: y,U: u,V: v, Url: img.src};
+                    //table[table.length] = {Pixels: pixels, Url:img.src, Img:img};
                     //console.log(table);
                   }
                   --imgNum;
@@ -271,13 +271,25 @@ var onLoaded = function() {
           var minIndex = 0;
           for(var n = 0; n < table.length; ++n){
             tempdist = 0;
+            var Y = 0, U = 0, V = 0;
             for(var k = 0, offset, r, g, b, a; k < w; ++k){
               for(var l = 0; l < w; ++l){
                 offset = ((i+k)*img.width + j+l) * 4;
-                for(var p = 0; p < 3; ++p)
-                  tempdist = tempdist + (pixels[offset+p] - table[n].Pixels[(k*w+l)+p])*(pixels[offset+p] - table[n].Pixels[(k*w+l)+p]);
+                //for(var p = 0; p < 3; ++p)
+                //  tempdist = tempdist + (pixels[offset+p] - table[n].Pixels[(k*w+l)+p])*(pixels[offset+p] - table[n].Pixels[(k*w+l)+p]);
+                r = pixels[offset+0];
+                g = pixels[offset+1];
+                b = pixels[offset+2];
+                a = pixels[offset+3];
+                Y = Y + 0.299*r + 0.587*g + 0.114*b;
+                U = U + -0.169*r + -0.331*g + 0.5*b + 128;
+                V = V + 0.5*r - 0.419*g - 0.081 + 128;
               }
+              Y = Y/w/w;
+              U = U/w/w;
+              V = V/w/w;
             }
+            mindist = (table[n].Y-Y)*(table[n].Y-Y) + (table[n].U-U)*(table[n].U-U) + (table[n].V-V)*(table[n].V-V)
             if(mindist < 0 || tempdist < mindist){
               mindist = tempdist;
               minIndex = n;
