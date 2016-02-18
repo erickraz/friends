@@ -289,6 +289,7 @@ var onLoaded = function() {
             Y = Y/w/w;
             U = U/w/w;
             V = V/w/w;
+            console.log(Y,U,V);
             mindist = (table[n].Y-Y)*(table[n].Y-Y) + (table[n].U-U)*(table[n].U-U) + (table[n].V-V)*(table[n].V-V)
             if(mindist < 0 || tempdist < mindist){
               mindist = tempdist;
