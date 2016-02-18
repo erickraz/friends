@@ -359,7 +359,7 @@ function postCanvasToFacebook() {
   console.log(data);
   FB.api('/me/photos', 'post', { message:'Album montage', url:data},
     function(response){
-        console.log(response);
+        console.log(response);}
         );
 }
 </script>
