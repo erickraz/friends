@@ -224,13 +224,13 @@ for(var i = 0; i < 16; i++){
     var img = new Image,
     canvas = document.createElement("canvas"),
     ctx = canvas.getContext("2d"),
-    src = photo; // insert image url here
+    src = photo.url; // insert image url here
     img.src = src;
     // make sure the load event fires for cached images too
-    if ( img.complete || img.complete === undefined ) {
-        img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-        img.src = src;
-    }         
+    // if ( img.complete || img.complete === undefined ) {
+    //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    //     img.src = src;
+    // }         
     document.body.appendChild(img);
   });
   }
