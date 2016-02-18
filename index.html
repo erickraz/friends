@@ -368,7 +368,7 @@ fd.append("message", "Album Montage");
 var req = new XMLHttpRequest();
 req.onreadystatechange = function() {
     if (req.readyState == XMLHttpRequest.DONE) {
-      alert(req.responseText.id);
+      console.log(req.responseText.id);
         //top.location.href = 'https://www.facebook.com/photo.php?fbid=' +  + '&amp;makeprofile=1';
     }
 }
