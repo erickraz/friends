@@ -224,24 +224,7 @@ var loaders = [];
     
     });
 $.when.apply(null, loaders).done(function() {
-  FB.api("/me/picture?type=large", function(response) {
-    console.log(response);
-    var photo = response.data;
-    var img = new Image,
-    canvas = document.createElement("canvas"),
-    ctx = canvas.getContext("2d"),
-    src = photo.url; // insert image url here
-    img.src = src;
-    img.onload = function() {
-      console.log(img.height);
-      console.log(table);
-    }
-    // make sure the load event fires for cached images too
-    // if ( img.complete || img.complete === undefined ) {
-    //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-    //     img.src = src;
-    // }         
-    document.body.appendChild(img);
+console.log(table);
   });
 });
   }
