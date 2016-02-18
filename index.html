@@ -306,7 +306,13 @@ var onLoaded = function() {
           patch.crossOrigin = "Anonymous";
           patch.src = urls[1];
           patch.onload = function(){
-            myctx.drawImage(patch, 0,0);
+            myctx.drawImage(patch, 0,0,10,10,);
+          }
+          var patch1 = new Image;
+          patch1.crossOrigin = "Anonymous";
+          patch1.src = urls[2];
+          patch1.onload = function(){
+            myctx.drawImage(patch, 0,10,10,10,);
           }
       //  }
 
