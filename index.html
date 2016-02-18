@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="jquery-1.12.0.min.js"></script>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
 </head>
@@ -147,7 +146,7 @@ var myMappings = [
     { title: "Comments", width: "20%" }
 ];
 var table = [];
-var loaders = [];
+var urls = [];
     FB.api('/me/albums?fields=id,name,privacy', function(response) {
     console.log(response.data[0])
     for (var i=0; i<response.data.length; i++) {
@@ -159,22 +158,21 @@ var loaders = [];
             for (var j=0; j<photos.data.length; j++){
               var photo = photos.data[j];
               //console.log(photos.data[j])
-
+              var img = new Image,
+              canvas = document.createElement("canvas"),
+              ctx = canvas.getContext("2d"),
               src = photo.picture; // insert image url here
               //document.body.appendChild(img);
-                var deferred = $.Deferred();
-                var img = new Image();
-                canvas = document.createElement("canvas"),
-                ctx = canvas.getContext("2d"),
-                img.src = src;
-                img.crossOrigin = "Anonymous";
-                // make sure the load event fires for cached images too
-                if ( img.complete || img.complete === undefined ) {
-                    img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-                    img.src = src;
-                }         
-                img.onload = function() {
-                  for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
+
+              img.crossOrigin = "Anonymous";
+              img.src = src;
+              // make sure the load event fires for cached images too
+              if ( img.complete || img.complete === undefined ) {
+                  img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+                  img.src = src;
+              }         
+              img.onload = function() {
+                for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                   canvas.width = img.width;
                   canvas.height = img.height;
                   if (img.height){
@@ -211,9 +209,7 @@ var loaders = [];
                     table[table.length] = {Y: y,U: u,V: v, Url: img.src};
                     //console.log(table);
                   }
-                };
-              
-              
+              }
      
 
             }
@@ -222,30 +218,25 @@ var loaders = [];
       }
     
     });
-    $.when.apply(null, loaders).done(function() {
-    // callback when everything was loaded
-
-      FB.api("/me/picture?type=large", function(response) {
-        console.log(response);
-        var photo = response.data;
-        var img = new Image,
-        canvas = document.createElement("canvas"),
-        ctx = canvas.getContext("2d"),
-        src = photo.url; // insert image url here
-        img.src = src;
-        img.onload = function() {
-          console.log(img.height);
-          console.log(table);
-        }
-
-        // make sure the load event fires for cached images too
-        // if ( img.complete || img.complete === undefined ) {
-        //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-        //     img.src = src;
-        // }         
-        document.body.appendChild(img);
-      });
-    });
+  FB.api("/me/picture?type=large", function(response) {
+    console.log(response);
+    var photo = response.data;
+    var img = new Image,
+    canvas = document.createElement("canvas"),
+    ctx = canvas.getContext("2d"),
+    src = photo.url; // insert image url here
+    img.src = src;
+    img.onload = function() {
+      console.log(img.height);
+      console.log(table);
+    }
+    // make sure the load event fires for cached images too
+    // if ( img.complete || img.complete === undefined ) {
+    //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    //     img.src = src;
+    // }         
+    document.body.appendChild(img);
+  });
   }
 </script>
 
