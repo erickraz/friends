@@ -7,7 +7,7 @@
 </head>
 <body>
 <canvas id="myCanvas" width="400" height="400"></canvas>
-<button onclick="myFunction()">up</button>
+<button onclick="postCanvasToFacebook()">upload and set to profile</button>
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -336,7 +336,10 @@ var onLoaded = function() {
           for(var j = 0; j < img.width/w; j++){
             myctx.drawImage(images[i*img.width/w+j], j*w*2, i*w*2,w*2,w*2);
           }
-        console.log(myCanvas.toDataURL("image/png"));
+          var data = myCanvas.toDataURL("image/png");
+  var encodedPng = data.substring(data.indexOf(',') + 1, data.length);
+  var decodedPng = Base64Binary.decode(encodedPng);
+        console.log(decodedPng);
       });
       
 
@@ -352,6 +355,16 @@ var onLoaded = function() {
 }
 }
   }
+function postCanvasToFacebook() {
+  var data = canvas.toDataURL("image/png");
+  var encodedPng = data.substring(data.indexOf(',') + 1, data.length);
+  var decodedPng = Base64Binary.decode(encodedPng);
+  FB.getLoginStatus(function(response) {
+    if (response.status === "connected") {  
+      postImageToFacebook(response.authResponse.accessToken, "heroesgenerator", "image/png", decodedPng, "www.heroesgenerator.com");
+    }
+  }
+}
 </script>
 
 <!--
