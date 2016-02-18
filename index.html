@@ -204,7 +204,7 @@ var urls = [];
                             max = hist[k];
                         }
                     }
-                    tableY = table[Math.floor(maxIndex/256)]
+                    //tableY = table[Math.floor(maxIndex/256)]
                     //tableY[tableY.length] = {U: u,V: v, index: counter};
                     table[table.length] = {Y: y,U: u,V: v, Url: img.src};
                   }
@@ -216,7 +216,6 @@ var urls = [];
         });
       }
     console.log(table);
-    console.log()
     });
   FB.api("/me/picture?type=large", function(response) {
     console.log(response);
