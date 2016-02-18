@@ -299,22 +299,16 @@ var onLoaded = function() {
           urls[urls.length] = table[minIndex].Url;
 
         }
-      console.log(urls[1]);
-      //for(var i = 0; i < img.height/10; i++)
-      //  for(var j = 0; j < img.width/10; j++){
+      console.log(url);
+      for(var i = 0; i < img.height/10; i++)
+        for(var j = 0; j < img.width/10; j++){
           var patch = new Image;
           patch.crossOrigin = "Anonymous";
-          patch.src = urls[1];
+          patch.src = urls[i*img.width/10+j];
           patch.onload = function(){
-            myctx.drawImage(patch, 0,0,10,10);
+            myctx.drawImage(patch, j*10, i*10,10,10);
           }
-          var patch1 = new Image;
-          patch1.crossOrigin = "Anonymous";
-          patch1.src = urls[2];
-          patch1.onload = function(){
-            myctx.drawImage(patch, 0,10,10,10);
-          }
-      //  }
+        }
 
     }
     // make sure the load event fires for cached images too
