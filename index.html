@@ -186,7 +186,7 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
               // }         
               img.onload = function() {
                 for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
-                  var w = 3
+                  var w = 4;
                 //console.log(this);
                   canvas.width = w;
                   canvas.height = w;
@@ -246,7 +246,7 @@ var onLoaded = function() {
   if(imgNum == 0){
   FB.api("/me/picture?type=large", function(response) {
     console.log(response);
-    var w = 3;
+    var w = 4;
     var photo = response.data;
     var img = new Image;
     var canvas = document.createElement("canvas");
