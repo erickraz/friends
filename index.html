@@ -355,7 +355,7 @@ var onLoaded = function() {
 function postCanvasToFacebook() {
 
   var myCanvas = document.getElementById('myCanvas');
-  var data = myCanvas.toDataURL('image/jpeg', 1.0);
+  var data = myCanvas.toDataURL('image/jpeg', 1.0).split('.')[1];
   console.log(data);
   FB.api('/me/photos', 'post', { message:'Album montage', url:data},
     function(response){
