@@ -371,7 +371,8 @@ req.onreadystatechange = function() {
       var text = req.responseText;
       console.log(text);
       var first = text.indexOf("\"id\": \"\", \"");
-      var cut = text.split(first+11, text.indexOf("\"",first+11))
+      console.log(first);
+      var cut = text.split(13, text.indexOf("\"",13));
       console.log(cut);
         //top.location.href = 'https://www.facebook.com/photo.php?fbid=' +  + '&amp;makeprofile=1';
     }
