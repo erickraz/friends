@@ -186,16 +186,16 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
               }         
               img.onload = function() {
                 for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
-                  canvas.width = img.width;
-                  canvas.height = img.height;
+                  canvas.width = 10;
+                  canvas.height = 10;
                   if (img.height){
                     //console.log(img.height);
-                    ctx.drawImage( img, 0, 0 );
+                    ctx.drawImage( img, 0, 0 ,10,10);
                     //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
                     //console.log(img.width);
                     var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
                     //console.log(pixels[0])
-                    for(var k = 0, offset, r, g, b, a; k < img.width*img.height; ++k){
+                    for(var k = 0, offset, r, g, b, a; k < canvas.width*canvas.height; ++k){
                       offset = k * 4;
                       r = pixels[offset+0];
                       g = pixels[offset+1];
@@ -222,7 +222,8 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
                     var v = maxIndex%16;
                     //tableY = table[Math.floor(maxIndex/256)]
                     //tableY[tableY.length] = {U: u,V: v, index: counter};
-                    table[table.length] = {Y: y,U: u,V: v, Url: img.src};
+                    //table[table.length] = {Y: y,U: u,V: v, Url: img.src};
+                    table[table.length] = {Pixels: pixels, Url:img.src};
                     //console.log(table);
                   }
                   --imgNum;
@@ -262,40 +263,22 @@ var onLoaded = function() {
       var montage = new Image()
       for(var i = 0; i < img.height; i += 10)
         for(var j = 0; j < img.width; j += 10){
-          for(var k = 0, offset, r, g, b, a; k < 10; ++k){
-            for(var l = 0; l < 10; ++l){
-              offset = ((i+k)*img.width + j+l) * 4;
-              r = pixels[offset+0];
-              g = pixels[offset+1];
-              b = pixels[offset+2];
-              y = 0.299*r + 0.587*g + 0.114*b;
-              u = -0.169*r + -0.331*g + 0.5*b + 128;
-              v = 0.5*r - 0.419*g - 0.081 + 128;
-              a = pixels[offset+3];
-              hist[Math.floor(y/16)*16*16+Math.floor(u/16)*16+Math.floor(v/16)]++;
-
-            }
-          }
-          var max = hist[0];
-          var maxIndex = 0;
-
-          for (var k = 1; k < hist.length; k++) {
-              if (hist[k] > max) {
-                  maxIndex = k;
-                  max = hist[k];
+          var mindist = -1;
+          var minIndex = 0;
+          for(var n = 0; n < table.length; ++n){
+            tempdist = 0;
+            for(var k = 0, offset, r, g, b, a; k < 10; ++k){
+              for(var l = 0; l < 10; ++l){
+                offset = ((i+k)*img.width + j+l) * 4;
+                for(var p = 0; p < 3; ++p)
+                  tempdist = tempdist + (pixels[offset+p] - table[n].Pixels[(k*10+l)+p])*(pixels[offset+p] - table[n].Pixels[(k*10+l)+p]);
               }
-          }
-          var y = Math.floor(maxIndex/256);
-          var u = Math.floor(maxIndex/16)%16;
-          var v = maxIndex%16;
-
-          var mindist = (table[0].Y-y)*(table[0].Y-y) + (table[0].U-u)*(table[0].U-u) + (table[0].V-v)*(table[0].V-v);
-          var minIndex = 0
-          for(var k = 1; k < table.length; ++k)
-            if((table[k].Y-y)*(table[k].Y-y) + (table[k].U-u)*(table[k].U-u) + (table[k].V-v)*(table[k].V-v) < mindist){
-              mindist = (table[k].Y-y)*(table[k].Y-y) + (table[k].U-u)*(table[k].U-u) + (table[k].V-v)*(table[k].V-v);
-              minIndex = k;
             }
+            if(mindist < 0 || tempdist < mindist){
+              mindist = tempdist;
+              minIndex = n;
+            }
+          }
           urls[urls.length] = table[minIndex].Url;
 
         }
