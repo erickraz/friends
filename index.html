@@ -357,7 +357,10 @@ function postCanvasToFacebook() {
   var myCanvas = document.getElementById('myCanvas');
   var data = myCanvas.toDataURL("image/png");
   console.log(data);
-  FB.api('/me/photos', 'post', { message:'Album montage', url:data});
+  FB.api('/me/photos', 'post', { message:'Album montage', url:data},
+    function(response){
+        console.log(response);
+        );
 }
 </script>
 
