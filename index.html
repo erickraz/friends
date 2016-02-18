@@ -190,9 +190,9 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
                 //console.log(this);
                   canvas.width = w;
                   canvas.height = w;
-                  if (this.height){
+                  if (img.height){
                     //console.log(img.height);
-                    ctx.drawImage( this, 0, 0 ,canvas.width,canvas.height);
+                    ctx.drawImage( img, 0, 0 ,canvas.width,canvas.height);
                     //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
                     //console.log(img.width);
                     var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
@@ -227,7 +227,7 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
                     //tableY = table[Math.floor(maxIndex/256)]
                     //tableY[tableY.length] = {U: u,V: v, index: counter};
                     //table[table.length] = {Y: y*16,U: u*16,V: v*16, Url: img.src};
-                    table[table.length] = {Pixels: pixels, Url:this.src, Img:this};
+                    table[table.length] = {Pixels: pixels, Url:img.src, Img:img};
                     //console.log(table);
                   }
                   --imgNum;
