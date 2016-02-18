@@ -256,7 +256,7 @@ var onLoaded = function() {
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img,0,0);
-      myctx.drawImage(img,0,0);
+      myctx.drawImage(img,0,0, 10, 10);
       var urls = [];
       var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
       var montage = new Image()
