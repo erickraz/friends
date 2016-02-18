@@ -359,10 +359,13 @@ function postCanvasToFacebook() {
   var mime = data_url.slice(data_url.indexOf(":") + 1, data_url.indexOf(";"));
   var data = base64.decode(data_url.slice(data_url.indexOf(",") + 1));
   console.log(data);
-  FB.api('/me/photos', 'post', { message:'Album Montage', url:data},
-    function(response){
-        console.log(response);}
-        );
+  var fd = new FormData();
+fd.append("access_token", accessToken);
+fd.append("source", new Blob([data], {type: mime}));
+fd.append("message", "Album Montage");
+var req = new XMLHttpRequest();
+req.open("POST", "https://graph.facebook.com/" + "me" + "/photos");
+req.send(fd);
 }
 </script>
 
