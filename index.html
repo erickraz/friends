@@ -191,7 +191,7 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
                   canvas.height = img.height;
                   if (img.height){
                     //console.log(img.height);
-                    ctx.drawImage( img, 0, 0 ,w,w);
+                    ctx.drawImage( img, 0, 0 ,canvas.width,canvas.height);
                     //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
                     //console.log(img.width);
                     var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
