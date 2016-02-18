@@ -158,7 +158,7 @@ for(var i = 0; i < 16; i++){
           if (photos && photos.data && photos.data.length){
             for (var j=0; j<photos.data.length; j++){
               var photo = photos.data[j];
-              console.log(photos.data[j])
+              //console.log(photos.data[j])
               var img = new Image,
               canvas = document.createElement("canvas"),
               ctx = canvas.getContext("2d"),
@@ -219,8 +219,8 @@ for(var i = 0; i < 16; i++){
     console.log(table);
     });
   FB.api("/me/picture", function(response) {
-    console.log(response.picture.data.url);
-    var photo = response.picture.data;
+    console.log(response);
+    var photo = response;
     var img = new Image,
     canvas = document.createElement("canvas"),
     ctx = canvas.getContext("2d"),
