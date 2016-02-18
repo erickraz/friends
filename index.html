@@ -244,7 +244,7 @@ var onLoaded = function() {
   if(imgNum == 0){
   FB.api("/me/picture?type=large", function(response) {
     console.log(response);
-    var w = 5;
+    var w = 10;
     var photo = response.data;
     var img = new Image;
     var canvas = document.createElement("canvas");
@@ -291,7 +291,7 @@ var onLoaded = function() {
           for(var n = 0; n < table.length; ++n){
             tempdist = 0;
 
-            tempdist = (table[n].Y-Y)*(table[n].Y-Y) + (table[n].U-U)*(table[n].U-U) + (table[n].V-V)*(table[n].V-V)
+            tempdist = (table[n].Y-Y)*(table[n].Y-Y) + (table[n].U-U)*(table[n].U-U) + (table[n].V-V)*(table[n].V-V);
             if(mindist < 0 || tempdist < mindist){
               mindist = tempdist;
               minIndex = n;
