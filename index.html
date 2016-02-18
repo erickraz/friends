@@ -366,6 +366,11 @@ fd.append("access_token", at);
 fd.append("source", new Blob([data], {type: mime}));
 fd.append("message", "Album Montage");
 var req = new XMLHttpRequest();
+req.onreadystatechange = function() {
+    if (req.readyState == XMLHttpRequest.DONE) {
+        alert(req.responseText);
+    }
+}
 req.open("POST", "https://graph.facebook.com/" + "me" + "/photos");
 req.send(fd);
 }
