@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 </head>
 <body>
+<canvas id="myCanvas" width="200" height="200"></canvas>
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -170,10 +171,10 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
             for (var j=0; j<photos.data.length; j++){
               var photo = photos.data[j];
               //console.log(photos.data[j])
-              var img = new Image,
-              canvas = document.createElement("canvas"),
-              ctx = canvas.getContext("2d"),
-              src = photo.picture; // insert image url here
+              var img = new Image;
+              var canvas = document.createElement("canvas");
+              var ctx = canvas.getContext("2d");
+              var src = photo.picture; // insert image url here
               //document.body.appendChild(img);
 
               img.crossOrigin = "Anonymous";
@@ -216,6 +217,9 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
                             max = hist[k];
                         }
                     }
+                    var y = floor(maxIndex/256);
+                    var u = floor(maxIndex/16)%16;
+                    var v = maxIndex%16;
                     //tableY = table[Math.floor(maxIndex/256)]
                     //tableY[tableY.length] = {U: u,V: v, index: counter};
                     table[table.length] = {Y: y,U: u,V: v, Url: img.src};
@@ -237,20 +241,80 @@ var onLoaded = function() {
   FB.api("/me/picture?type=large", function(response) {
     console.log(response);
     var photo = response.data;
-    var img = new Image,
-    canvas = document.createElement("canvas"),
-    ctx = canvas.getContext("2d"),
-    src = photo.url; // insert image url here
+    var img = new Image;
+    var canvas = document.createElement("canvas");
+    var myCanvas = document.getElementById('myCanvas');
+    var myctx = myCanvas.getContext("2d");
+    var ctx = canvas.getContext("2d");
+    var src = photo.url; // insert image url here
+    img.crossOrigin = "Anonymous";
     img.src = src;
     img.onload = function() {
+      for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
       console.log(img.height);
       console.log(table);
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img,0,0);
+      var urls = [];
+      var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
+      var montage = new Image()
+      for(var i = 0; i < img.height; i += 10)
+        for(var j = 0; j < img.width; j += 10){
+          for(var k = 0, offset, r, g, b, a; k < 10; ++k){
+            for(var l = 0; l < 10; ++l){
+              offset = ((i+k)*img.width + j+l) * 4;
+              r = pixels[offset+0];
+              g = pixels[offset+1];
+              b = pixels[offset+2];
+              y = 0.299*r + 0.587*g + 0.114*b;
+              u = -0.169*r + -0.331*g + 0.5*b + 128;
+              v = 0.5*r - 0.419*g - 0.081 + 128;
+              a = pixels[offset+3];
+              hist[Math.floor(y/16)*16*16+Math.floor(u/16)*16+Math.floor(v/16)]++;
+
+            }
+          }
+          var max = hist[0];
+          var maxIndex = 0;
+
+          for (var k = 1; k < hist.length; k++) {
+              if (hist[k] > max) {
+                  maxIndex = k;
+                  max = hist[k];
+              }
+          }
+          var y = floor(maxIndex/256);
+          var u = floor(maxIndex/16)%16;
+          var v = maxIndex%16;
+
+          var mindist = (table[0].Y-y)*(table[0].Y-y) + (table[0].U-u)*(table[0].U-u) + (table[0].V-v)*(table[0].V-v);
+          var minIndex = 0
+          for(var k = 1; k < table.length; ++k)
+            if((table[k].Y-y)*(table[k].Y-y) + (table[k].U-u)*(table[k].U-u) + (table[k].V-v)*(table[k].V-v) < mindist){
+              mindist = (table[k].Y-y)*(table[k].Y-y) + (table[k].U-u)*(table[k].U-u) + (table[k].V-v)*(table[k].V-v);
+              minIndex = k;
+            }
+          urls[urls.length] = table[minIndex].Url;
+
+        }
+      for(var i = 0; i < img.height/10; i++)
+        for(var j = 0; j < img.width/10; j++){
+          var patch = new Image;
+          patch.crossOrigin = "Anonymous";
+          patch.src = urls[i*img.width/10+j];
+          patch.onload = function(){
+            myctx.drawImage(patch, j*10, i*10,10,10);
+          }
+        }
+
     }
     // make sure the load event fires for cached images too
     // if ( img.complete || img.complete === undefined ) {
     //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
     //     img.src = src;
     // }         
+
     document.body.appendChild(img);
   });
 }
