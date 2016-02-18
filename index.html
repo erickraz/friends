@@ -317,7 +317,7 @@ var onLoaded = function() {
           images[i].src = sources[i];
         }
       }
-      loadImages(sources, function(images) {
+      loadImages(urls, function(images) {
         for(var i = 0; i < img.height/10; i++)
           for(var j = 0; j < img.width/10; j++){
             myctx.drawImage(patch, j*10, i*10,10,10);
