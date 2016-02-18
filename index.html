@@ -137,7 +137,7 @@ CanvasImage.prototype.removeCanvas = function () {
     this.canvas.parentNode.removeChild(this.canvas);
 };
 function loadSprite(src) {
-                var deferred = $.Deferred();
+                var deferred = jQuery.Deferred();
                 var img = new Image();
                 canvas = document.createElement("canvas"),
                 ctx = canvas.getContext("2d"),
