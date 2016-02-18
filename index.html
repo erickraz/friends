@@ -218,7 +218,7 @@ for(var i = 0; i < 16; i++){
       }
     console.log(table);
     });
-  FB.api("/me/picture?type=square", function(response) {
+  FB.api("/me/picture?type=large", function(response) {
     console.log(response);
     var photo = response.data;
     var img = new Image,
