@@ -137,7 +137,32 @@ CanvasImage.prototype.getImageData = function () {
 CanvasImage.prototype.removeCanvas = function () {
     this.canvas.parentNode.removeChild(this.canvas);
 };
-function loadSprite(src) {
+
+var counter = 0;
+var myMappings = [
+    { title: "Name", width: "10%" },
+    { title: "Phone", width: "10%" },
+    { title: "Address", width: "50%" },
+    { title: "Zip", width: "10%" },
+    { title: "Comments", width: "20%" }
+];
+var table = [];
+var loaders = [];
+    FB.api('/me/albums?fields=id,name,privacy', function(response) {
+    console.log(response.data[0])
+    for (var i=0; i<response.data.length; i++) {
+      var album = response.data[i];
+      //if (album.name == 'Profile Pictures'){
+
+        FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
+          if (photos && photos.data && photos.data.length){
+            for (var j=0; j<photos.data.length; j++){
+              var photo = photos.data[j];
+              //console.log(photos.data[j])
+
+              //src = photo.picture; // insert image url here
+              //document.body.appendChild(img);
+              function loadSprite(src) {
                 var deferred = $.Deferred();
                 var img = new Image();
                 canvas = document.createElement("canvas"),
@@ -191,31 +216,6 @@ function loadSprite(src) {
                 };
                 return deferred.promise();
               }
-var counter = 0;
-var myMappings = [
-    { title: "Name", width: "10%" },
-    { title: "Phone", width: "10%" },
-    { title: "Address", width: "50%" },
-    { title: "Zip", width: "10%" },
-    { title: "Comments", width: "20%" }
-];
-var table = [];
-var loaders = [];
-    FB.api('/me/albums?fields=id,name,privacy', function(response) {
-    console.log(response.data[0])
-    for (var i=0; i<response.data.length; i++) {
-      var album = response.data[i];
-      //if (album.name == 'Profile Pictures'){
-
-        FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
-          if (photos && photos.data && photos.data.length){
-            for (var j=0; j<photos.data.length; j++){
-              var photo = photos.data[j];
-              //console.log(photos.data[j])
-
-              //src = photo.picture; // insert image url here
-              //document.body.appendChild(img);
-
               loaders.push(loadSprite(photo.picture));
               
               
