@@ -162,7 +162,6 @@ var loaders = [];
 
               //src = photo.picture; // insert image url here
               //document.body.appendChild(img);
-              function loadSprite(src) {
                 var deferred = $.Deferred();
                 var img = new Image();
                 canvas = document.createElement("canvas"),
@@ -212,11 +211,7 @@ var loaders = [];
                     table[table.length] = {Y: y,U: u,V: v, Url: img.src};
                     //console.log(table);
                   }
-                    deferred.resolve();
                 };
-                return deferred.promise();
-              }
-              loaders.push(loadSprite(photo.picture));
               
               
      
