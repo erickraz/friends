@@ -256,7 +256,7 @@ var onLoaded = function() {
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img,0,0);
-      myctx.drawImage(img,0,0, 10, 10);
+      //myctx.drawImage(img,0,0, 10, 10);
       var urls = [];
       var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
       var montage = new Image()
@@ -300,15 +300,15 @@ var onLoaded = function() {
 
         }
       console.log(urls[1]);
-      for(var i = 0; i < img.height/10; i++)
-        for(var j = 0; j < img.width/10; j++){
+      //for(var i = 0; i < img.height/10; i++)
+      //  for(var j = 0; j < img.width/10; j++){
           var patch = new Image;
           patch.crossOrigin = "Anonymous";
-          patch.src = urls[i*img.width/10+j];
+          patch.src = urls[1];
           patch.onload = function(){
-            myctx.drawImage(patch, j*10, i*10,10,10);
+            myctx.drawImage(patch, 0,0);
           }
-        }
+      //  }
 
     }
     // make sure the load event fires for cached images too
