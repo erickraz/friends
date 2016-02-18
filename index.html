@@ -272,7 +272,7 @@ var onLoaded = function() {
             for(var k = 0, offset, r, g, b, a; k < w; ++k){
               for(var l = 0; l < w; ++l){
                 offset = ((i+k)*img.width + j+l) * 4;
-                for(var p = 0; p < 3; ++p)
+                for(var p = 0; p < 4; ++p)
                   tempdist = tempdist + (pixels[offset+p] - table[n].Pixels[(k*w+l)+p])*(pixels[offset+p] - table[n].Pixels[(k*w+l)+p]);
               }
             }
