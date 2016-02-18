@@ -256,6 +256,7 @@ var onLoaded = function() {
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img,0,0);
+      myctx.drawImage(img,0,0);
       var urls = [];
       var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
       var montage = new Image()
@@ -304,7 +305,7 @@ var onLoaded = function() {
           patch.crossOrigin = "Anonymous";
           patch.src = urls[i*img.width/10+j];
           patch.onload = function(){
-            myctx.drawImage(patch, j*10, i*10,10,10);
+            //myctx.drawImage(patch, j*10, i*10,10,10);
           }
         }
 
