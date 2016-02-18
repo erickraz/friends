@@ -180,10 +180,10 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
               img.crossOrigin = "Anonymous";
               img.src = src;
               // make sure the load event fires for cached images too
-              if ( img.complete || img.complete === undefined ) {
-                  img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-                  img.src = src;
-              }         
+              // if ( img.complete || img.complete === undefined ) {
+              //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+              //     img.src = src;
+              // }         
               img.onload = function() {
                 for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                   var w = 5
