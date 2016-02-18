@@ -226,7 +226,7 @@ var loaders = [];
       }
     
     });
-    $.when.apply(null, loaders).done(function() {
+    jQuery.when.apply(null, loaders).done(function() {
     // callback when everything was loaded
 
       FB.api("/me/picture?type=large", function(response) {
