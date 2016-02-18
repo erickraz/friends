@@ -269,9 +269,7 @@ var onLoaded = function() {
         for(var j = 0; j < img.width; j += w){
           var mindist = -1;
           var minIndex = 0;
-          for(var n = 0; n < table.length; ++n){
-            tempdist = 0;
-            var Y = 0, U = 0, V = 0;
+          var Y = 0, U = 0, V = 0;
             for(var k = 0, offset, r, g, b, a; k < w; ++k){
               for(var l = 0; l < w; ++l){
                 offset = ((i+k)*img.width + j+l) * 4;
@@ -290,6 +288,9 @@ var onLoaded = function() {
             U = U/w/w;
             V = V/w/w;
             console.log(Y,U,V);
+          for(var n = 0; n < table.length; ++n){
+            tempdist = 0;
+
             mindist = (table[n].Y-Y)*(table[n].Y-Y) + (table[n].U-U)*(table[n].U-U) + (table[n].V-V)*(table[n].V-V)
             if(mindist < 0 || tempdist < mindist){
               mindist = tempdist;
