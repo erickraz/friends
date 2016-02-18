@@ -305,7 +305,7 @@ var onLoaded = function() {
       loadImages(urls, function(images) {
         for(var i = 0; i < img.height/w; i++)
           for(var j = 0; j < img.width/w; j++){
-            myctx.drawImage(images[i*img.width/w+j], i*w, j*w,w,w);
+            myctx.drawImage(images[i*img.width/w+j], j*w, i*w,w,w);
           }
       });
       
