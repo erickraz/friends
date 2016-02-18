@@ -163,7 +163,7 @@ for(var i = 0; i < 16; i++){
               canvas = document.createElement("canvas"),
               ctx = canvas.getContext("2d"),
               src = photo.picture; // insert image url here
-              document.body.appendChild(img);
+              //document.body.appendChild(img);
 
               img.crossOrigin = "Anonymous";
               img.src = src;
@@ -218,6 +218,20 @@ for(var i = 0; i < 16; i++){
       }
     console.log(table);
     });
+  FB.api("/me", {fields: "id,name,picture"}, function(response) {
+    var photo = photos.data[j];
+    var img = new Image,
+    canvas = document.createElement("canvas"),
+    ctx = canvas.getContext("2d"),
+    src = photo.picture; // insert image url here
+    img.src = src;
+    // make sure the load event fires for cached images too
+    if ( img.complete || img.complete === undefined ) {
+        img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+        img.src = src;
+    }         
+    document.body.appendChild(img);
+  });
   }
 </script>
 
