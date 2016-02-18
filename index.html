@@ -187,12 +187,12 @@ FB.api('/me/albums?fields=id,name,privacy', function(response) {
               img.onload = function() {
                 for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                   var w = 5
-                //console.log(img);
+                console.log(this);
                   canvas.width = w;
                   canvas.height = w;
                   if (img.height){
                     //console.log(img.height);
-                    ctx.drawImage( img, 0, 0 ,canvas.width,canvas.height);
+                    ctx.drawImage( this, 0, 0 ,canvas.width,canvas.height);
                     //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
                     //console.log(img.width);
                     var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
