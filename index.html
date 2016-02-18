@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="jquery-1.12.0.min.js"></script>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
 </head>
@@ -147,6 +148,7 @@ var myMappings = [
 ];
 var table = [];
 var urls = [];
+var loaders = [];
     FB.api('/me/albums?fields=id,name,privacy', function(response) {
     console.log(response.data[0])
     for (var i=0; i<response.data.length; i++) {
@@ -171,6 +173,8 @@ var urls = [];
                   img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
                   img.src = src;
               }         
+              var deferred = $.Deferred();
+              loaders.push(deferred.promise());
               img.onload = function() {
                 for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                   canvas.width = img.width;
@@ -209,8 +213,9 @@ var urls = [];
                     table[table.length] = {Y: y,U: u,V: v, Url: img.src};
                     //console.log(table);
                   }
+                  deferred.resolve();
               }
-     
+            
 
             }
           }
@@ -218,6 +223,7 @@ var urls = [];
       }
     
     });
+$.when.apply(null, loaders).done(function() {
   FB.api("/me/picture?type=large", function(response) {
     console.log(response);
     var photo = response.data;
@@ -237,6 +243,7 @@ var urls = [];
     // }         
     document.body.appendChild(img);
   });
+}
   }
 </script>
 
