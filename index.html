@@ -5,6 +5,9 @@
 <meta charset="UTF-8">
 </head>
 <body>
+<script language="JavaScript" type="text/javascript" src="/js/jquery-1.2.6.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/jquery-ui-personalized-1.5.2.packed.js"></script>
+<script language="JavaScript" type="text/javascript" src="/js/sprinkle.js"></script>
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -137,7 +140,7 @@ CanvasImage.prototype.removeCanvas = function () {
     this.canvas.parentNode.removeChild(this.canvas);
 };
 function loadSprite(src) {
-                var deferred = jQuery.Deferred();
+                var deferred = $.Deferred();
                 var img = new Image();
                 canvas = document.createElement("canvas"),
                 ctx = canvas.getContext("2d"),
@@ -226,7 +229,7 @@ var loaders = [];
       }
     
     });
-    jQuery.when.apply(null, loaders).done(function() {
+    $.when.apply(null, loaders).done(function() {
     // callback when everything was loaded
 
       FB.api("/me/picture?type=large", function(response) {
