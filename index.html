@@ -264,7 +264,9 @@ var onLoaded = function() {
       //myctx.drawImage(img,0,0, 10, 10);
       var urls = [];
       var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
-      console.log(pixels);
+      console.log(pixels.length);
+      console.log(canvas.width);
+      console.log(canvas.height);
       var montage = new Image()
       for(var i = 0; i < img.height; i += w)
         for(var j = 0; j < img.width; j += w){
