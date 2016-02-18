@@ -218,7 +218,7 @@ for(var i = 0; i < 16; i++){
       }
     console.log(table);
     });
-  FB.api("/me", {fields: "id,name,picture"}, function(response) {
+  FB.api("/me/picture", function(response) {
     console.log(response.picture.data.url);
     var photo = response.picture.data;
     var img = new Image,
