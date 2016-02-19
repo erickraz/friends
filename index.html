@@ -118,7 +118,7 @@ var imgNum = 0;
               // in order to get raw data from canvas, set cross origin to anonymous
               img.crossOrigin = "Anonymous";
               img.src = src;
-              make sure the load event fires for cached images too
+              //make sure the load event fires for cached images too
               if ( img.complete || img.complete === undefined ) {
                   img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
                   img.src = src;
