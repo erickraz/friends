@@ -2,6 +2,7 @@
 <html>
 <head>
 <script src="base64.js"></script>
+<script src="imgasraw.js"></script>
 <title>Facebook Login JavaScript Example</title>
 <meta charset="UTF-8">
 </head>
@@ -85,157 +86,52 @@ var at;
   // successful.  See statusChangeCallback() for when this call is made.
   function testAPI(token) {
     console.log('Welcome!  Fetching your information.... ');
-    
-    //FB.api('/me', function(response) {
-    //  console.log('Successful login for: ' + response.name);
-    //  document.getElementById('status').innerHTML =
-    //    'Thanks for logging in, ' + response.name + '!';
-    //});
-    // FB.api('/me/photos?fields=', function(response) {
-    //   var result_holder = document.getElementById('status');
-    //   //var friend_data = response.data.sort(sortMethod);
-    //   var photo_data = response.data;
-
-    //   var results = '';
-    //   //console.log('"https://graph.facebook.com/' + photo_data[0].id + '?access_token=' + token + '"');
-    //   console.log(photo_data[0])
-    //   for (var i = 0; i < photo_data.length; i++) {
-
-    //     results += '<div><img src="https://graph.facebook.com/' + photo_data[i].id + '?access_token=' + token + '&fields=link">' + '</div>';
-    //   }
-
-    //   // and display them at our holder element
-    //   result_holder.innerHTML = '<h2>Result list of your friends:</h2>' + results;
-    // });
-
-
-
-var CanvasImage = function (image) {
-    this.canvas  = document.createElement('canvas');
-    this.context = this.canvas.getContext('2d');
-
-    document.body.appendChild(this.canvas);
-
-    this.width  = this.canvas.width  = image.width;
-    this.height = this.canvas.height = image.height;
-
-    this.context.drawImage(image, 0, 0, this.width, this.height);
-};
-
-CanvasImage.prototype.clear = function () {
-    this.context.clearRect(0, 0, this.width, this.height);
-};
-
-CanvasImage.prototype.update = function (imageData) {
-    this.context.putImageData(imageData, 0, 0);
-};
-
-CanvasImage.prototype.getPixelCount = function () {
-    return this.width * this.height;
-};
-
-CanvasImage.prototype.getImageData = function () {
-    return this.context.getImageData(0, 0, this.width, this.height);
-};
-
-CanvasImage.prototype.removeCanvas = function () {
-    this.canvas.parentNode.removeChild(this.canvas);
-};
-
 var counter = 0;
-var myMappings = [
-    { title: "Name", width: "10%" },
-    { title: "Phone", width: "10%" },
-    { title: "Address", width: "50%" },
-    { title: "Zip", width: "10%" },
-    { title: "Comments", width: "20%" }
-];
 var table = [];
-var urls = [];
+//var urls = [];
 var imgNum = 0;
-FB.api('/me/albums?fields=id,name,privacy', function(response) {
-  for (var i=0; i<response.data.length; i++) {
-    var album = response.data[i];
-    FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
-      if (photos && photos.data && photos.data.length)
-        for (var j=0; j<photos.data.length; j++)
-          ++imgNum;
-    });
-  }
-});
+    // go through every album to count the total number of images, needed for call back
     FB.api('/me/albums?fields=id,name,privacy', function(response) {
-    console.log(response.data[0])
+      for (var i=0; i<response.data.length; i++) {
+        var album = response.data[i];
+        FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
+          if (photos && photos.data && photos.data.length)
+            for (var j=0; j<photos.data.length; j++)
+              ++imgNum;
+        });
+      }
+    });
+    //
+    FB.api('/me/albums?fields=id,name,privacy', function(response) {
+    //console.log(response.data[0])
     for (var i=0; i<response.data.length; i++) {
       var album = response.data[i];
       //if (album.name == 'Profile Pictures'){
-
         FB.api('/'+album.id+'/photos?fields=picture,images', function(photos){
           if (photos && photos.data && photos.data.length){
             for (var j=0; j<photos.data.length; j++){
               var photo = photos.data[j];
               //console.log(photos.data[j])
               var img = new Image;
-              var canvas = document.createElement("canvas");
-              var ctx = canvas.getContext("2d");
+              //var canvas = document.createElement("canvas");
+              //var ctx = canvas.getContext("2d");
               var src = photo.picture; // insert image url here
-              //document.body.appendChild(img);
-
+              // in order to get raw data from canvas, set cross origin to anonymous
               img.crossOrigin = "Anonymous";
               img.src = src;
-              // make sure the load event fires for cached images too
-              // if ( img.complete || img.complete === undefined ) {
-              //     img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
-              //     img.src = src;
-              // }         
+              make sure the load event fires for cached images too
+              if ( img.complete || img.complete === undefined ) {
+                  img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+                  img.src = src;
+              }         
               img.onload = function() {
-                for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
                   var w = 4;
-                //console.log(this);
-                  canvas.width = w;
-                  canvas.height = w;
                   if (this.height){
-                    //console.log(img.height);
-                    ctx.drawImage( this, 0, 0 ,canvas.width,canvas.height);
-                    //localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
-                    //console.log(img.width);
-                    var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
-                    //console.log(pixels[0])
-                    for(var k = 0, offset, r, g, b, a; k < canvas.width*canvas.height; ++k){
-                      offset = k * 4;
-                      r = pixels[offset+0];
-                      g = pixels[offset+1];
-                      b = pixels[offset+2];
-                      a = pixels[offset+3];
-                      y = 0.299*r + 0.587*g + 0.114*b;
-                      u = -0.169*r + -0.331*g + 0.5*b + 128;
-                      v = 0.5*r - 0.419*g - 0.081 + 128;
-                      a = pixels[offset+3];
-                      hist[Math.floor(y/16)*16*16+Math.floor(u/16)*16+Math.floor(v/16)]++;
-
-                    }
-                    //console.log(hist);
-                    //console.log(pixels);
-                    var max = hist[0];
-                    var maxIndex = 0;
-
-                    for (var k = 1; k < hist.length; k++) {
-                        if (hist[k] > max) {
-                            maxIndex = k;
-                            max = hist[k];
-                        }
-                    }
-                    var y = Math.floor(maxIndex/256);
-                    var u = Math.floor(maxIndex/16)%16;
-                    var v = maxIndex%16;
-                    //tableY = table[Math.floor(maxIndex/256)]
-                    //tableY[tableY.length] = {U: u,V: v, index: counter};
-                    //table[table.length] = {Y: y*16,U: u*16,V: v*16, Url: img.src};
+                    var pixels = imgAsRaw(this, w, w);
                     table[table.length] = {Pixels: pixels, Url:this.src, Img:this};
-                    //console.log(table);
                   }
                   --imgNum;
                   onLoaded();
-                  //document.body.appendChild(this);
               }
               
 
@@ -261,12 +157,9 @@ var onLoaded = function() {
     img.src = src;
     img.onload = function() {
       for (var i = 0, hist = new Array(16*16*16); i < 16*16*16;) hist[i++] = 0;
-      console.log(img.height);
-      console.log(table);
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.drawImage(img,0,0);
-      //myctx.drawImage(img,0,0, 10, 10);
       var urls = [];
       var pixels = ctx.getImageData(0,0,canvas.width,canvas.height).data;
       var montage = new Image()
