@@ -9,13 +9,8 @@
 </head>
 <body>
 <canvas id="myCanvas" width="400" height="400"></canvas>
-<style>
-  .spinner {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-  }
-</style><button onclick="postCanvasToFacebook()">upload and set to profile</button>
+<div id="foo"></div>
+<button onclick="postCanvasToFacebook()">upload and set to profile</button>
 <script>
 var at;
   // This is called with the results from from FB.getLoginStatus().
@@ -127,8 +122,8 @@ function testAPI(token) {
     top: 'auto', // Top position relative to parent in px
     left: 'auto' // Left position relative to parent in px
   };
-  spinner_div = $('#spinner').get(0);
-  var spinner = new Spinner(opts).spin(spinner_div);
+  var target = document.getElementById('foo');
+  var spinner = new Spinner(opts).spin(target);
   //
   FB.api('/me/albums?fields=id,name,privacy', function(response) {
     for (var i=0; i<response.data.length; i++) {
