@@ -10,10 +10,11 @@
 </head>
 <body>
 <div id="canvas-wrap">
-  <canvas id="myCanvas" width="400" height="400"></canvas>
+  <canvas id="myCanvas" width="400" height="400" style="position:fixed;top:50%;left:50%"></canvas>
+  <canvas id="profile" width="400" height="400" style="position:fixed;top:50%;left:50%"></canvas>
   <div id ="foo" style="position:fixed;top:50%;left:50%"></div>
 </div>
-<button onclick="postCanvasToFacebook()" height="44" width="122"><img src="img/post.png" height="44" width="122" /></button>
+<button onclick="postCanvasToFacebook()">Post</button>
 <script>
 var at;
   // This is called with the results from from FB.getLoginStatus().
@@ -214,20 +215,19 @@ function testAPI(token) {
             var data = myCanvas.toDataURL("image/png");
         });
       }
-      document.body.appendChild(img);
+      //document.body.appendChild(img);
+      var pc = document.getElementById('profle');
+      var pctx = profile.getContext("2d");
+      pctx.drawImage(img);
     });
-  }
-}
-function confirm(){
-  if (confirm("Do you want to upload the motnage?") == true) {
-    postCanvasToFacebook();
-  }
-  else{
-    alert("Not uploaded");
   }
 }
 //upload the canvas image to facebook
 function postCanvasToFacebook() {
+  if (confirm("Do you want to upload the motnage?") == true) {
+    alert("Not uploaded");
+    return;
+  }
   var myCanvas = document.getElementById('myCanvas');
   var data_url = myCanvas.toDataURL();
   var mime = data_url.slice(data_url.indexOf(":") + 1, data_url.indexOf(";"));
