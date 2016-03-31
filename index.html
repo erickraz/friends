@@ -12,7 +12,7 @@
   <canvas id="myCanvas" width="400" height="400"></canvas>
   <div id ="foo" style="position:fixed;top:50%;left:50%"></div>
 </div>
-<button onclick="postCanvasToFacebook()"><img src="post.png" /></button>
+<button onclick="confirm()"><img src="img/post.png" /></button>
 <script>
 var at;
   // This is called with the results from from FB.getLoginStatus().
@@ -217,11 +217,16 @@ function testAPI(token) {
     });
   }
 }
+function confirm(){
+  if (confirm("Do you want to upload the motnage?") == true) {
+    postCanvasToFacebook();
+  }
+  else{
+    alert("Not uploaded");
+  }
+}
 //upload the canvas image to facebook
 function postCanvasToFacebook() {
-  if (confirm("Do you want to upload the motnage?") == true) {
-        return;
-    }
   var myCanvas = document.getElementById('myCanvas');
   var data_url = myCanvas.toDataURL();
   var mime = data_url.slice(data_url.indexOf(":") + 1, data_url.indexOf(";"));
