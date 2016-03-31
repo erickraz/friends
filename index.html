@@ -92,6 +92,16 @@ var at;
   // successful.  See statusChangeCallback() for when this call is made.
 function testAPI(token) {
   console.log('Welcome!  Fetching your information.... ');
+  FB.api("/me/picture?type=large", function(response) {
+    var pphoto = response.data;
+    var pimg = new Image;
+    var psrc = pphoto.url; // insert image url here
+    pimg.crossOrigin = "Anonymous";
+    pimg.src = psrc;
+    var pc = document.getElementById('profile');
+    var pctx = pc.getContext("2d");
+    pctx.drawImage(pimg,0,0, pc.width, pc.height);
+  }
   var counter = 0;
   var table = [];
   //var urls = [];
@@ -217,9 +227,6 @@ function testAPI(token) {
         });
       }
       //document.body.appendChild(img);
-      var pc = document.getElementById('profile');
-      var pctx = profile.getContext("2d");
-      pctx.drawImage(img,0,0, pc.width, pc.height);
     });
   }
 }
